@@ -1,4 +1,5 @@
-
+import { combineReducers } from "redux"
+import { getUserReducer } from "./getUserReducer"
 const initialState = {
     userData : []
 }
@@ -15,3 +16,8 @@ export function userReducer(state = initialState, action){
         return state;
     }
 }
+
+export const rootReducer = combineReducers({
+    userReducer,
+    getUserReducer,
+})

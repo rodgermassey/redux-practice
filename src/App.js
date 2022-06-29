@@ -4,9 +4,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deleteUser } from './actions/deleteUser';
 import { addUser } from './actions/addUser';
+import {getUser} from './actions/getUser'
 
 function mapStateToProps(state){
-  return {data: state.userData}
+  console.log(state)
+  return {data: state.userReducer.userData,
+          fetchedUser: state.getUserReducer}
 }
 
 // function mapDispatchToProps(dispatch){
@@ -24,6 +27,12 @@ function App(props) {
   function handleDeleteUser(id){
     props.deleteUser(id)
   }
+
+  function getUsers(){
+    props.getUser()
+  }
+
+  console.log(props.state)
     
   return (
     <div className="App">
@@ -38,8 +47,17 @@ function App(props) {
           <br/>
         </>)
       })}
+      <button onClick={getUsers}>Get Users from API</button>
+      {props.fetchedUser.map(item=>{
+        return (
+          <div>
+            <span key={item.id}>{item.name}</span> 
+          <br/>
+          </div>
+        )
+      })}
     </div>
   );
 }
 
-export default connect(mapStateToProps, {addUser, deleteUser})(App);
+export default connect(mapStateToProps, {addUser, deleteUser, getUser})(App);
